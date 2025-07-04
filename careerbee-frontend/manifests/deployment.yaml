@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: frontend
   namespace: careerbee-frontend
+  labels:
+    app: frontend
 spec:
   replicas: 1
   selector:
@@ -13,10 +15,12 @@ spec:
       labels:
         app: frontend
     spec:
+      nodeSelector:
+        node-alias: careerbee-prod-app  # 💡 이 노드에만 스케줄링
       imagePullSecrets:
         - name: ecr-creds
       containers:
-      - name: frontend
-        image: 418295722497.dkr.ecr.ap-northeast-2.amazonaws.com/kubeadm/frontend:latest
-        ports:
-        - containerPort: 80
+        - name: frontend
+          image: 418295722497.dkr.ecr.ap-northeast-2.amazonaws.com/kubeadm/frontend:latest
+          ports:
+            - containerPort: 80
