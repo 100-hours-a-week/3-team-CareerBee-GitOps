@@ -24,3 +24,15 @@ spec:
           image: 418295722497.dkr.ecr.ap-northeast-2.amazonaws.com/kubeadm/frontend:latest
           ports:
             - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 20
